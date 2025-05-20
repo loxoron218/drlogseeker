@@ -1,4 +1,4 @@
-# DRLogSeeker
+# drlogseeker
 
 [![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Built with Vibe](https://img.shields.io/badge/Built%20With-▚Cursor%20AI%20Vibe-7B42F6.svg)](https://cursor.so)
@@ -6,7 +6,7 @@
 **GTK4/Libadwaita/Rust tool for analyzing DR logs from MAAT DROffline and foobar2000**  
 *"Because sometimes you don't have time to wait for a torrent tracker invite"*
 
-![DRLogSeeker Interface](https://github.com/user-attachments/assets/70de874c-69e1-494d-9c25-2191323f1053)
+![drlogseeker Interface](https://github.com/user-attachments/assets/70de874c-69e1-494d-9c25-2191323f1053)
 
 ## Features
 - **Dual-Language DR Detection** - Finds both English/Russian DR log formats
@@ -46,13 +46,13 @@ flatpak install flathub com.github.drlogseeker
 2. **Filter Text Files**  
    Press `Ctrl+F` to search and choose 'Text' from the filetype menu. Then press`Ctrl+A` to select all files and download them
 3. **Batch Analyze**  
-   Open DRLogSeeker and pick the folder all the files *.txt/log are located in and scan
+   Open drlogseeker and pick the folder all the files *.txt/log are located in and scan
 
 ## Development
 
 ```bash
-git clone https://github.com/loxoron218/DRLogSeeker
-cd DRLogSeeker
+git clone https://github.com/loxoron218/drlogseeker
+cd drlogseeker
 cargo build --release
 ```
 
