@@ -49,8 +49,6 @@ package() {
   install -D -m644 "${srcdir}/${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
   # --- IMPORTANT: Desktop Entry and Icon ---
-  # If drlogseeker is a GUI application, you should create a .desktop file
-  # and an icon for proper integration with desktop environments.
   install -D -m644 "${srcdir}/${pkgname}/${pkgname}.desktop" "${pkgdir}/usr/share/applications/${pkgname}.desktop"
   install -D -m644 "${srcdir}/${pkgname}/icon.svg" "${pkgdir}/usr/share/icons/hicolor/scalable/apps/${pkgname}.svg"
 }
