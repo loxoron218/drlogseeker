@@ -45,7 +45,9 @@ flatpak install flathub com.github.drlogseeker
    Type in your favorite album on Nicotine+
 2. **Filter Text Files**  
    Press `Ctrl+F` to search and choose 'Text' from the filetype menu. Then press `Ctrl+A` to select all files and download them
-3. **Batch Analyze**  
+3. **Organize Downloads**  
+   It's recommended to turn on the setting to save downloads in subfolders for each user. This improves usability by helping you identify which user a log belongs to after scanning.
+4. **Batch Analyze**  
    Open drlogseeker and pick the folder all the files *.txt/log are located in and scan
 
 ## Contributing
