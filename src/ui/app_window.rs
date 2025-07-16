@@ -22,7 +22,7 @@ pub fn build_ui(app: &Application) {
 
     // Create the main application window.
     let window = ApplicationWindow::new(app);
-    window.set_title(Some("DR Analyzer"));
+    window.set_title(Some("drlogseeker"));
     window.set_icon_name(Some("com.loxoron218.drlogseeker"));
     window.set_resizable(true);
     window.set_default_size(1000, 600);
