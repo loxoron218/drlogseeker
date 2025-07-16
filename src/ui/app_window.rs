@@ -2,7 +2,8 @@ use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
 
 use glib::clone;
-use gtk4::{Adjustment, Align::Fill, Box, Button, Orientation::Vertical, ProgressBar, ScrolledWindow, Viewport};
+use gtk4::{Adjustment, Box, Button, Label, Orientation::Vertical, ProgressBar, ScrolledWindow, Viewport};
+use gtk4::Align::{Fill, Start};
 use gtk4::PolicyType::{Automatic, Never};
 use libadwaita::{Application, ApplicationWindow, HeaderBar};
 use libadwaita::prelude::{AdwApplicationWindowExt, BoxExt, ButtonExt, GtkWindowExt, WidgetExt};
@@ -78,6 +79,14 @@ pub fn build_ui(app: &Application) {
     viewport.set_child(Some(&column_view));
     scrolled.set_child(Some(&viewport));
     vbox.append(&scrolled);
+
+    // Create a label to display the file count.
+    let file_count_label = Label::new(Some("Files: 0"));
+    file_count_label.set_halign(Start);
+    file_count_label.set_margin_start(10);
+    file_count_label.set_margin_end(10);
+    file_count_label.set_margin_bottom(5);
+    vbox.append(&file_count_label);
     window.set_content(Some(&vbox));
 
     // Initialize the shared application state, protected by a Mutex for thread safety.
@@ -91,7 +100,7 @@ pub fn build_ui(app: &Application) {
     // Set up event handlers for keyboard, mouse, and button clicks.
     setup_keyboard_controls(&window, &selection_model, &list_store, &app_state);
     setup_mouse_controls(&column_view, &window, &selection_model);
-    setup_button_actions(&window, &open_button, &scan_button, &clear_button, &selected_path, &list_store, &app_state, &progress_bar);
+    setup_button_actions(&window, &open_button, &scan_button, &clear_button, &selected_path, &list_store, &app_state, &progress_bar, &file_count_label);
 
     // Connect the settings button to show the settings dialog.
     settings_button.connect_clicked(clone!(@weak window, @strong app_state => move |_| {

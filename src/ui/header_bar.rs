@@ -3,7 +3,7 @@ use std::path::PathBuf;
 
 use gio::ListStore;
 use glib::clone;
-use gtk4::{Button, FileChooserAction::SelectFolder, FileChooserDialog, ProgressBar};
+use gtk4::{Button, FileChooserAction::SelectFolder, FileChooserDialog, Label, ProgressBar};
 use gtk4::ResponseType::{Accept, Cancel};
 use libadwaita::ApplicationWindow;
 use libadwaita::prelude::{ButtonExt, DialogExt, FileChooserExt, FileExt, GtkWindowExt, ListModelExt, WidgetExt};
@@ -29,34 +29,37 @@ use crate::ui::dialogs::show_error_dialog;
 pub fn setup_button_actions(window: &ApplicationWindow, open_button: &Button, 
                        scan_button: &Button, clear_button: &Button, 
                        selected_path: &Arc<Mutex<Option<PathBuf>>>, list_store: &ListStore, 
-                       app_state: &Arc<Mutex<AppState>>, progress_bar: &ProgressBar) {
+                       app_state: &Arc<Mutex<AppState>>, progress_bar: &ProgressBar, 
+                       file_count_label: &Label) {
     
     // Automatically update button sensitivity when the list store changes.
-    list_store.connect_items_changed(clone!(@weak scan_button, @weak clear_button => move |list_store, _, _, _| {
+    list_store.connect_items_changed(clone!(@weak scan_button, @weak clear_button, @weak file_count_label => move |list_store, _, _, _| {
         let has_items = list_store.n_items() > 0;
         clear_button.set_sensitive(has_items);
         scan_button.set_sensitive(has_items);
+        file_count_label.set_text(&format!("Files: {}", list_store.n_items()));
     }));
 
     // The "Clear" button resets the application state.
-    clear_button.connect_clicked(clone!(@strong list_store, @strong app_state, @strong scan_button, @strong clear_button => move |_| {
+    clear_button.connect_clicked(clone!(@strong list_store, @strong app_state, @strong scan_button, @strong clear_button, @strong file_count_label => move |_| {
         list_store.remove_all();
         if let Ok(mut state) = app_state.lock() {
             state.results.clear();
         }
         scan_button.set_sensitive(false);
         clear_button.set_sensitive(false);
+        file_count_label.set_text("Files: 0");
     }));
 
     // The "Open" button shows a directory selection dialog.
-    open_button.connect_clicked(clone!(@strong window, @strong scan_button, @strong clear_button, @strong selected_path, @strong list_store, @strong app_state => move |_| {
+    open_button.connect_clicked(clone!(@strong window, @strong scan_button, @strong clear_button, @strong selected_path, @strong list_store, @strong app_state, @strong file_count_label => move |_| {
         let dialog = FileChooserDialog::new(
             Some("Select Directory"),
             Some(&window),
             SelectFolder,
             &[("Cancel", Cancel), ("Open", Accept)]
         );
-        dialog.connect_response(clone!(@strong window, @strong scan_button, @strong clear_button, @strong selected_path, @strong list_store, @strong app_state => move |dialog, response| {
+        dialog.connect_response(clone!(@strong window, @strong scan_button, @strong clear_button, @strong selected_path, @strong list_store, @strong app_state, @strong file_count_label => move |dialog, response| {
             if response == Accept {
                 if let Some(path) = dialog.file().and_then(|f| f.path()) {
 
@@ -83,6 +86,7 @@ pub fn setup_button_actions(window: &ApplicationWindow, open_button: &Button,
                         let has_items = !state.results.is_empty();
                         scan_button.set_sensitive(has_items);
                         clear_button.set_sensitive(has_items);
+                        file_count_label.set_text(&format!("Files: {}", list_store.n_items()));
                     }
                 }
             }
