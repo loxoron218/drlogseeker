@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=DR Log Seeker
+Comment=An application for analyzing DR values in log files
+Exec=drlogseeker
+Icon=drlogseeker
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor;
