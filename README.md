@@ -6,7 +6,7 @@
 **GTK4/Libadwaita/Rust tool for analyzing DR logs from MAAT DROffline and foobar2000**  
 *"Because sometimes you don't have time to wait for a torrent tracker invite"*
 
-![drlogseeker Interface]()
+![drlogseeker Interface](https://github.com/user-attachments/assets/aae0a156-b317-4e57-8946-1d2f5bd9c99a)
 
 ## Features
 - **Dual-Language DR Detection** - Finds both English/Russian DR log formats
