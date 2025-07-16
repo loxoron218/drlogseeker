@@ -1,6 +1,7 @@
 # Maintainer: Your Name <your@email.com>
 pkgname=drlogseeker
-pkgver=0.1.0
+pkgver=$(git ls-remote "${url}.git" HEAD | cut -f1) # Get the latest commit hash
+pkgver="${pkgver:0:7}-g${pkgver}"  # Shorten to first 7 chars and add a "g" prefix
 pkgrel=1
 pkgdesc="An application for analyzing DR values in log files"
 arch=('x86_64') # Adjust if you support other architectures
@@ -25,10 +26,15 @@ makedepends=(
 )
 
 # For git source, we need to get the commit hash for reproducible builds
-# This assumes your repository is at the root of the source directory after cloning
-_commit=$(git ls-remote "${url}.git" HEAD | cut -f1)
-source=("git+${url}.git#commit=${_commit}")
+source=("git+${url}.git#commit=${pkgver}")
 sha256sums=('SKIP') # Use SKIP for git sources as content changes with each commit
+
+# Prepare the build environment
+prepare() {
+  # Ensure we're working from the latest commit
+  cd "${srcdir}/${pkgname}"
+  git checkout "${pkgver}" # Checkout the latest commit
+}
 
 build() {
   cd "${srcdir}/${pkgname}"
