@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=DR Log Seeker
+Name=drlogseeker
 Comment=An application for analyzing DR values in log files
 Exec=drlogseeker
 Icon=drlogseeker
