@@ -31,6 +31,7 @@ sha256sums=('SKIP') # Use SKIP for git sources as content changes with each comm
 
 # Prepare the build environment
 prepare() {
+
   # Ensure we're working from the latest commit
   cd "${srcdir}/${pkgname}"
   git checkout "${pkgver}" # Checkout the latest commit
@@ -42,6 +43,7 @@ build() {
 }
 
 package() {
+
   # Create the destination directory for the binary
   install -D -m755 "${srcdir}/${pkgname}/target/release/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
 
